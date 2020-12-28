@@ -36,7 +36,7 @@ export const styles = StyleSheet.create({
   centerBox: {
     backgroundColor: "#fff",
     width: "90%",
-    height: "77%",
+    height: 580,
     borderRadius: 20,
     display: "flex",
     alignItems: "center"
@@ -55,7 +55,7 @@ export const styles = StyleSheet.create({
     borderRadius: 50,
     width: "100%",
     marginTop: 15,
-    marginBottom: 20
+    marginBottom: 20,
   },
   imgWeek: {
     resizeMode: 'stretch',

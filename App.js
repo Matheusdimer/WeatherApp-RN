@@ -1,5 +1,6 @@
 import React from 'react';
-import {HomeWheather, Details} from './src/Home';
+import HomeWheather from './src/Home';
+import Details from "./src/PrevisaoHoraria";
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 

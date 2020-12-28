@@ -16,28 +16,35 @@ export const Background = styled.View`
 `;
 
 export const Card = styled.View`
-  width: 125px;
-  height: 160px;
-  background-color: #FFFFFF;
-  border-radius: 1px;
-  margin-left: 10px;
-  margin-right: 2px;
-  margin-bottom: 10px;
-  flex-direction: column;
+  display: flex;
   align-items: center;
-  padding: 10px;
-  justify-content: space-between;
+  flex-direction: row;
+  width: 100%;
+  height: 60px;
+  padding: 0 15px 0 15px;
+  margin-bottom: 10px;
+  background-color: #87cdff;
+  border-radius: 6px;
+`;
+
+export const CardText = styled.Text`
+  font-size: 18px;
+  color: #f0f0f0;
+  font-weight: 600;
 `;
 
 export const Body = styled.View`
-  padding: 0px;
+  padding: 20px;
   flex: 1;
   align-items: center;
+  justify-content: center;
 `;
 
 export const MainWheather = styled.View`
-  height: 50%;
+  height: 50px;
   width: 90%;
-  background-color: #F00;
-  margin: 20px;
+  margin: 20px 20px 5px 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 `;
