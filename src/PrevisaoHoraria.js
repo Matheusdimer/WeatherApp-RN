@@ -111,8 +111,8 @@ function CardsPrevisaoHoraria(props) {
 
     return (
       <Card key={hora}>
-        <CardText style={{ width: '15%' }}>{hora}</CardText>
-        <CardText style={{ textAlign: 'left', paddingLeft: 5, width: '50%' }}>{descricao}</CardText>
+        <CardText style={{ width: '18%' }}>{hora}</CardText>
+        <CardText style={{ textAlign: 'left', paddingLeft: 5, width: '48%' }}>{descricao}</CardText>
         <View width="15%">
           <Image
             source={{
