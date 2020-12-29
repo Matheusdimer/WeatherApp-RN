@@ -5,8 +5,7 @@ import {
   View,
   Text,
   Image,
-  TextInput,
-  TouchableHighlight,
+  StatusBar,
 } from 'react-native';
 import {
   Title,
@@ -15,30 +14,70 @@ import {
   Body,
   MainWheather,
   CardText,
+  InfoCard,
+  InfoText,
+  H1,
 } from './components/StyledComponents';
 import formatDescription from './util/formatDescription';
-import LinearGradient from 'react-native-linear-gradient';
+import { Grafico } from "./components/grafico";
+import LinearGradient from "react-native-linear-gradient";
 
 export default function Details({ route }) {
-  console.log(route.params.detalhes);
+  console.log(route.params);
+  const { dados, day, detalhes, diaSem } = route.params;
+
+  let horaInicial = new Date(dados[0].dt * 1000);
+  let previsao;
+  let divisaoDia = 24 - horaInicial.getHours();
+
+  if (day == 0) {
+    previsao = dados.slice(0, divisaoDia);
+  } else {
+    previsao = dados.slice(divisaoDia, 24 + divisaoDia);
+  }
+
+  const graficoHora = previsao.map(data => {
+    let hora = new Date(data.dt * 1000)
+    return hora.getHours()
+  })
+
+  const graficoTemp = previsao.map(data => {
+    return Math.round(data.temp);
+  })
+
+  const icones = previsao.map(data => {
+    return `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`
+  })
+
+  const chuva = previsao.map(data => {
+    return data.rain ? data.rain['1h'] : false
+  })
+
+  let nascer = new Date(detalhes.sunrise * 1000)
+  nascer = `${nascer.getHours()}:${nascer.getMinutes()}`
+
+  let pordoSol = new Date(detalhes.sunset * 1000)
+  pordoSol = `${pordoSol.getHours()}:${pordoSol.getMinutes()}`
+
   return (
     <>
+      <StatusBar barStyle="white-content" backgroundColor="#7dc8ff" />
       <Background>
         <LinearGradient
           style={{
             position: 'absolute',
             bottom: 0,
             width: '100%',
-            height: 50,
-            zIndex: 5,
+            height: '100%',
           }}
-          colors={['rgba(92, 187, 255, 0.0)', 'rgba(92, 187, 255, 1.0)']}
+          colors={['#7dc8ff', '#5cbbff']}
           pointerEvents={'none'}
         />
+
         <MainWheather>
-          <View width="18%">
+          <View width="20%">
             <Image
-              source={route.params.detalhes.icon}
+              source={detalhes.icon}
               style={{
                 width: 65,
                 height: 65,
@@ -46,89 +85,49 @@ export default function Details({ route }) {
             />
           </View>
 
-          <Text style={{ fontSize: 16, color: '#FFF', width: "42%" }}>
-            {route.params.diaSem + '\n' + route.params.detalhes.description}
+          <Text style={{ fontSize: 16, color: '#FFF', width: "45%" }}>
+            {diaSem + '\n' + detalhes.description}
           </Text>
           <Text style={{ fontSize: 24, color: '#FFF' }}>
-            {route.params.detalhes.max}ºC / {route.params.detalhes.min}ºC
+            {detalhes.max}ºC / {detalhes.min}ºC
           </Text>
         </MainWheather>
-        <LinearGradient
-          style={{
-            position: 'absolute',
-            top: 75,
-            width: '100%',
-            height: 50,
-            zIndex: 5,
-          }}
-          colors={['rgba(92, 187, 255, 1.0)', 'rgba(92, 187, 255, 0.0)']}
-          pointerEvents={'none'}
-        />
-        <ScrollView style={{ width: '100%', paddingTop: 10 }}>
-          <Body>
-            <CardsPrevisaoHoraria
-              dados={route.params.dados}
-              dia={route.params.day}
-            />
-          </Body>
+
+        <View style={{ height: '40%', alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }}>
+          <View>
+            <InfoCard>
+              <InfoText>Vento</InfoText>
+              <H1>{Math.round(detalhes.vento * 3.6)} km/h</H1>
+            </InfoCard>
+            <InfoCard>
+              <InfoText>Nuvens</InfoText>
+              <H1>{detalhes.nuvens}%</H1>
+            </InfoCard>
+            <InfoCard>
+              <InfoText>Nascer do Sol</InfoText>
+              <H1>{nascer}</H1>
+            </InfoCard>
+          </View>
+          <View>
+            <InfoCard>
+              <InfoText>Umidade</InfoText>
+              <H1>{detalhes.umidade}%</H1>
+            </InfoCard>
+            <InfoCard>
+              <InfoText>Pressão</InfoText>
+              <H1>{detalhes.pressao} hPa</H1>
+            </InfoCard>
+            <InfoCard>
+              <InfoText>Por do Sol</InfoText>
+              <H1>{pordoSol}</H1>
+            </InfoCard>
+          </View>
+        </View>
+
+        <ScrollView horizontal={true}>
+          <Grafico temp={graficoTemp} horas={graficoHora} icons={icones} chuva={chuva} />
         </ScrollView>
       </Background>
     </>
   );
-}
-
-function CardsPrevisaoHoraria(props) {
-  let horaInicial = new Date(props.dados[0].dt * 1000);
-  let previsao;
-  let divisaoDia = 24 - horaInicial.getHours();
-
-  if (props.dia == 0) {
-    previsao = props.dados.slice(0, divisaoDia);
-  } else {
-    previsao = props.dados.slice(divisaoDia, 24 + divisaoDia);
-  }
-
-  return previsao.map((hour) => {
-    let hora = new Date(hour.dt * 1000);
-    let descricao = formatDescription(hour.weather[0].description);
-    let chuva;
-
-    hora = `${hora.getHours()}:00`;
-
-    if (hour.rain) {
-      chuva = hour.rain['1h'];
-    } else {
-      chuva = 0;
-    }
-
-    const Chuva = () => {
-      if (chuva != 0) {
-        return <Text style={{ fontSize: 16, color: '#f0f0f0' }}>{chuva} mm</Text>;
-      } else {
-        return <View />;
-      }
-    };
-
-    return (
-      <Card key={hora}>
-        <CardText style={{ width: '18%' }}>{hora}</CardText>
-        <CardText style={{ textAlign: 'left', paddingLeft: 5, width: '48%' }}>{descricao}</CardText>
-        <View width="15%">
-          <Image
-            source={{
-              uri: `http://openweathermap.org/img/wn/${hour.weather[0].icon}@2x.png`,
-            }}
-            style={{
-              width: 50,
-              height: 50,
-            }}
-          />
-        </View>
-        <View width="25%" style={{ alignItems: 'center', paddingRight: 5 }}>
-          <CardText>{Math.round(hour.temp)}ºC</CardText>
-          <Chuva />
-        </View>
-      </Card>
-    );
-  });
 }

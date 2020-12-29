@@ -41,10 +41,32 @@ export const Body = styled.View`
 `;
 
 export const MainWheather = styled.View`
-  height: 50px;
+  height: 12%;
   width: 90%;
-  margin: 20px 20px 5px 20px;
+  padding: 20px;
   display: flex;
   flex-direction: row;
   align-items: center;
+`;
+
+export const InfoCard = styled.View`
+  background-color: #87cdff;
+  width: 150px;
+  height: 60px;
+  border-radius: 6px;
+  margin: 10px;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const InfoText = styled.Text `
+  text-align: center;
+  color: #fefefe;
+  font-size: 13px;
+`;
+
+export const H1 = styled.Text `
+  text-align: center;
+  color: #fefefe;
+  font-size: 20px;
 `;

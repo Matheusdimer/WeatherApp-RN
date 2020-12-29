@@ -96,11 +96,11 @@ export default function HomeWheather({navigation}) {
 
   useEffect(() => {
     const apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=metric&lang=pt_br&exclude=minutely&appid=${apiKey}`;
+    console.log(apiUrl)
     if (lat && lon){
       fetch(apiUrl).then((response) =>
       response.json().then((json) => {
         let temp_week = [];
-        console.log(json)
         setToday({
           icon: {
             uri: `http://openweathermap.org/img/wn/${json?.current.weather[0].icon}@2x.png`
@@ -114,6 +114,8 @@ export default function HomeWheather({navigation}) {
           max: Math.round(json?.daily[0].temp.max),
         });
 
+        console.log(today)
+
         json.daily.map((data, i) => {
           const weekDay = new Date(data.dt * 1000);
 
@@ -126,6 +128,12 @@ export default function HomeWheather({navigation}) {
             max: Math.round(data.temp.max),
             rain: data.rain ? data.rain : 0,
             day: i == 0 ? 'Hoje' : semana[weekDay.getDay()],
+            vento: data.wind_speed,
+            umidade: data.humidity,
+            nuvens: data.clouds,
+            pressao: data.pressure,
+            sunrise: data.sunrise,
+            sunset: data.sunset
           });
         });
 
@@ -207,13 +215,13 @@ export default function HomeWheather({navigation}) {
             {today.climaAtual + '\n' + today.temp + unity}
           </Text>
           <Text style={styles.fontNormal}>
-            Min: {today.min + unity} Máx: {today.max + unity}
+            Min: {today.min + unity}   Máx: {today.max + unity}
           </Text>
           <Text style={styles.fontNormal}>
             Sensação térmica: {today.feelsLike + unity}
           </Text>
           <Text style={styles.fontNormal}>
-            Vento: {today.wind} km/h Umidade: {today.umidade}%
+            Vento: {Math.round(today.wind * 3.6)} km/h   Umidade: {today.umidade}%
           </Text>
           <ScrollView style={styles.week}>
             <Semana />
