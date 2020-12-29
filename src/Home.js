@@ -95,8 +95,7 @@ export default function HomeWheather({navigation}) {
   }, [city]);
 
   useEffect(() => {
-    const apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=metric&lang=pt_br&exclude=minutely&appid=${apiKey}`;
-    console.log(apiUrl)
+    const apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=metric&lang=pt_br&exclude=minutely&appid=${apiKey}`
     if (lat && lon){
       fetch(apiUrl).then((response) =>
       response.json().then((json) => {
@@ -114,8 +113,6 @@ export default function HomeWheather({navigation}) {
           max: Math.round(json?.daily[0].temp.max),
         });
 
-        console.log(today)
-
         json.daily.map((data, i) => {
           const weekDay = new Date(data.dt * 1000);
 
@@ -126,7 +123,7 @@ export default function HomeWheather({navigation}) {
             description: formatDescription(data.weather[0].description),
             min: Math.round(data.temp.min),
             max: Math.round(data.temp.max),
-            rain: data.rain ? data.rain : 0,
+            rain: data.rain ? data.rain.toFixed(1) : 0,
             day: i == 0 ? 'Hoje' : semana[weekDay.getDay()],
             vento: data.wind_speed,
             umidade: data.humidity,

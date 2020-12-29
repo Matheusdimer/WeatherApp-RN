@@ -23,12 +23,11 @@ import { Grafico } from "./components/grafico";
 import LinearGradient from "react-native-linear-gradient";
 
 export default function Details({ route }) {
-  console.log(route.params);
   const { dados, day, detalhes, diaSem } = route.params;
 
   let horaInicial = new Date(dados[0].dt * 1000);
-  let previsao;
   let divisaoDia = 24 - horaInicial.getHours();
+  let previsao;
 
   if (day == 0) {
     previsao = dados.slice(0, divisaoDia);
@@ -36,13 +35,18 @@ export default function Details({ route }) {
     previsao = dados.slice(divisaoDia, 24 + divisaoDia);
   }
 
+  let menorTemperatura = Math.round(previsao[0].temp);
+
   const graficoHora = previsao.map(data => {
     let hora = new Date(data.dt * 1000)
     return hora.getHours()
   })
 
   const graficoTemp = previsao.map(data => {
-    return Math.round(data.temp);
+    let temperatura = Math.round(data.temp);
+    if (temperatura < menorTemperatura)
+      menorTemperatura = temperatura
+    return temperatura;
   })
 
   const icones = previsao.map(data => {
@@ -50,7 +54,7 @@ export default function Details({ route }) {
   })
 
   const chuva = previsao.map(data => {
-    return data.rain ? data.rain['1h'] : false
+    return data.rain ? data.rain['1h'].toFixed(1) : false
   })
 
   let nascer = new Date(detalhes.sunrise * 1000)
@@ -124,8 +128,8 @@ export default function Details({ route }) {
           </View>
         </View>
 
-        <ScrollView horizontal={true}>
-          <Grafico temp={graficoTemp} horas={graficoHora} icons={icones} chuva={chuva} />
+        <ScrollView horizontal={true} style={{margin: 0}}>
+          <Grafico temp={graficoTemp} horas={graficoHora} icons={icones} chuva={chuva} yMin={menorTemperatura - 15}/>
         </ScrollView>
       </Background>
     </>

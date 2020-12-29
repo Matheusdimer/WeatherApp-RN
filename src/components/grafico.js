@@ -3,6 +3,22 @@ import { LineChart } from "react-native-svg-charts";
 import { Text, Image } from "react-native-svg";
 import { View } from "react-native";
 
+export const Grafico = (props) => {
+  return (
+    <>
+      <LineChart
+        contentInset={{ top: 25, left: 25, right: 25, bottom: 0 }}
+        style={{ height: '100%', margin: 20, width: props.temp.length * 80 }}
+        data={props.temp}
+        svg={{ stroke: '#F0f0f0' }}
+        yMin={props.yMin}
+      >
+        <Label horas={props.horas} icons={props.icons} chuva={props.chuva} />
+      </LineChart>
+    </>
+  )
+}
+
 function Label(props) {
   return props.data.map((value, index) => (
     <View key={(`${value}-${index}`)}>
@@ -24,15 +40,15 @@ function Label(props) {
           fontSize="12"
           fontWeight="200"
           x={props.x(index)}
-          y="55%"
+          y="62%"
           textAnchor="middle"
         >
-          {props.chuva[index]+' mm'}
+          {props.chuva[index] + ' mm'}
         </Text>
       }
       <Image
         x={props.x(index) - 23}
-        y="60%"
+        y="67%"
         width="50"
         height="40"
         preserveAspectRatio="xMidYMid slice"
@@ -45,7 +61,7 @@ function Label(props) {
         fontSize="12"
         fontWeight="200"
         x={props.x(index)}
-        y="80%"
+        y="85%"
         textAnchor="middle"
 
       >
@@ -53,22 +69,4 @@ function Label(props) {
       </Text>
     </View>
   ));
-}
-
-
-export const Grafico = (props) => {
-
-  return (
-    <>
-      <LineChart
-        contentInset={{ top: 25, left: 20, right: 20, bottom: 0 }}
-        style={{ height: '100%', margin: 20, width: props.temp.length * 80 }}
-        data={props.temp}
-        svg={{ stroke: '#F0f0f0' }}
-        yMin="-10"
-      >
-        <Label horas={props.horas} icons={props.icons} chuva={props.chuva} />
-      </LineChart>
-    </>
-  )
 }
