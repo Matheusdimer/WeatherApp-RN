@@ -47,7 +47,7 @@ function Label(props) {
         </Text>
       }
       <Image
-        x={props.x(index) - 23}
+        x={props.x(index) - 25}
         y="67%"
         width="50"
         height="40"
@@ -63,7 +63,6 @@ function Label(props) {
         x={props.x(index)}
         y="85%"
         textAnchor="middle"
-
       >
         {("00" + props.horas[index]).slice(-2) + ':00'}
       </Text>

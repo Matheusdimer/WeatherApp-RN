@@ -118,8 +118,8 @@ export default function Details({ route }) {
               <H1>{detalhes.umidade}%</H1>
             </InfoCard>
             <InfoCard>
-              <InfoText>Pressão</InfoText>
-              <H1>{detalhes.pressao} hPa</H1>
+              <InfoText>Chuva</InfoText>
+              <H1>{detalhes.rain} mm</H1>
             </InfoCard>
             <InfoCard>
               <InfoText>Por do Sol</InfoText>

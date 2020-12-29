@@ -107,7 +107,7 @@ export default function HomeWheather({navigation}) {
           climaAtual: formatDescription(json?.current.weather[0].description),
           temp: Math.round(json?.current.temp),
           feelsLike: Math.round(json?.current.feels_like),
-          wind: json?.current.wind_speed,
+          wind: Math.round(json?.current.wind_speed * 3.6),
           umidade: json?.current.humidity,
           min: Math.round(json?.daily[0].temp.min),
           max: Math.round(json?.daily[0].temp.max),
@@ -128,7 +128,6 @@ export default function HomeWheather({navigation}) {
             vento: data.wind_speed,
             umidade: data.humidity,
             nuvens: data.clouds,
-            pressao: data.pressure,
             sunrise: data.sunrise,
             sunset: data.sunset
           });
@@ -218,7 +217,7 @@ export default function HomeWheather({navigation}) {
             Sensação térmica: {today.feelsLike + unity}
           </Text>
           <Text style={styles.fontNormal}>
-            Vento: {Math.round(today.wind * 3.6)} km/h   Umidade: {today.umidade}%
+            Vento: {today.wind} km/h   Umidade: {today.umidade}%
           </Text>
           <ScrollView style={styles.week}>
             <Semana />
