@@ -1,6 +1,6 @@
 # ReactNative-WeatherApp
 
-Aplicativo de previsão do tempo feito com React Native e API do OpenWeatherMaps. (Em desenvolvimento)
+Aplicativo de previsão do tempo feito com React Native e API do OpenWeatherMaps.
 
 <h1>Screenshots</h1>
 
