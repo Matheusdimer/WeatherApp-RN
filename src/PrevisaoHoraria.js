@@ -129,7 +129,7 @@ export default function Details({ route }) {
         </View>
 
         <ScrollView horizontal={true} style={{margin: 0}}>
-          <Grafico temp={graficoTemp} horas={graficoHora} icons={icones} chuva={chuva} yMin={menorTemperatura - 15}/>
+          <Grafico temp={graficoTemp} horas={graficoHora} icons={icones} chuva={chuva} yMin={menorTemperatura-10}/>
         </ScrollView>
       </Background>
     </>
