@@ -59,7 +59,7 @@ export default function Details({ route }) {
   })
 
   const icones = previsao.map(data => {
-    return `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`
+    return `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`
   })
 
   const chuva = previsao.map(data => {

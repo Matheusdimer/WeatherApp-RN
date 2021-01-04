@@ -99,7 +99,7 @@ export default function HomeWheather({navigation}) {
         let temp_week = [];
         setToday({
           icon: {
-            uri: `http://openweathermap.org/img/wn/${json?.current.weather[0].icon}@2x.png`
+            uri: `https://openweathermap.org/img/wn/${json?.current.weather[0].icon}@2x.png`
           },
           climaAtual: formatDescription(json?.current.weather[0].description),
           temp: Math.round(json?.current.temp),
@@ -115,7 +115,7 @@ export default function HomeWheather({navigation}) {
 
           temp_week.push({
             icon: {
-              uri: `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`,
+              uri: `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`,
             },
             description: formatDescription(data.weather[0].description),
             min: Math.round(data.temp.min),
