@@ -11,7 +11,6 @@ import {
   PermissionsAndroid,
   ToastAndroid,
 } from 'react-native';
-import NavigationBar from 'react-native-navbar-color';
 import geolocation from 'react-native-geolocation-service';
 import {styles} from './style/Styles';
 import formatDescription from './util/formatDescription';
@@ -40,8 +39,6 @@ export default function HomeWheather({navigation}) {
     min: '...',
     max: '...',
   });
-
-  NavigationBar.setColor(fundo);
 
   async function verifyLocationPermission() {
     try {
@@ -187,7 +184,6 @@ export default function HomeWheather({navigation}) {
 
   return (
     <>
-      <StatusBar barStyle="white-content" backgroundColor={fundo} />
       <SafeAreaView style={styles.fundo}>
         <View style={styles.location}>
           <TextInput

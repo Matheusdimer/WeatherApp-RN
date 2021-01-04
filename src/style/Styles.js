@@ -1,6 +1,11 @@
-import { React, StyleSheet } from 'react-native'
+import { React, StyleSheet, StatusBar, Dimensions } from 'react-native'
 
 const background = "#5cbbff"
+const DEVICE_HEIGHT = Dimensions.get('screen').height;
+const WINDOW_HEIGHT = Dimensions.get('window').height;
+const STATUS_HEIGHT = StatusBar.currentHeight
+const NAVBAR_HEIGHT = DEVICE_HEIGHT - WINDOW_HEIGHT
+
 
 export const styles = StyleSheet.create({
   fundo: {
@@ -8,6 +13,7 @@ export const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
     alignItems: "center",
+    paddingTop: STATUS_HEIGHT
   },
   searchIcon: {
     resizeMode: 'stretch',

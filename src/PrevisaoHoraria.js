@@ -6,6 +6,7 @@ import {
   Text,
   Image,
   StatusBar,
+  Dimensions,
 } from 'react-native';
 import {
   Title,
@@ -21,6 +22,14 @@ import {
 import formatDescription from './util/formatDescription';
 import { Grafico } from "./components/grafico";
 import LinearGradient from "react-native-linear-gradient";
+
+const DEVICE_HEIGHT = Dimensions.get('screen').height;
+const WINDOW_HEIGHT = Dimensions.get('window').height;
+const STATUS_HEIGHT = StatusBar.currentHeight
+const NAVBAR_HEIGHT = DEVICE_HEIGHT - WINDOW_HEIGHT
+
+console.log(NAVBAR_HEIGHT)
+
 
 export default function Details({ route }) {
   const { dados, day, detalhes, diaSem } = route.params;
@@ -65,9 +74,7 @@ export default function Details({ route }) {
 
   return (
     <>
-      <StatusBar barStyle="white-content" backgroundColor="#7dc8ff" />
-      <Background>
-        <LinearGradient
+      <LinearGradient
           style={{
             position: 'absolute',
             bottom: 0,
@@ -77,7 +84,7 @@ export default function Details({ route }) {
           colors={['#7dc8ff', '#5cbbff']}
           pointerEvents={'none'}
         />
-
+      <View style={{flex: 1, marginBottom: NAVBAR_HEIGHT, marginTop: STATUS_HEIGHT}}>
         <MainWheather>
           <View width="20%">
             <Image
@@ -128,10 +135,10 @@ export default function Details({ route }) {
           </View>
         </View>
 
-        <ScrollView horizontal={true} style={{margin: 0}}>
+        <ScrollView horizontal={true} style={{margin: 0}} showsHorizontalScrollIndicator={false}>
           <Grafico temp={graficoTemp} horas={graficoHora} icons={icones} chuva={chuva} yMin={menorTemperatura-10}/>
         </ScrollView>
-      </Background>
+      </View>
     </>
   );
 }
