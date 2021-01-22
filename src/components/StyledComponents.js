@@ -1,7 +1,6 @@
-import { View, Text } from 'react-native'
-import styled from 'styled-components'
+import styled from 'styled-components';
 
-const fundo = "#5cbbff"
+const fundo = '#5cbbff';
 
 export const Title = styled.Text`
   color: #333333;
@@ -59,13 +58,13 @@ export const InfoCard = styled.View`
   justify-content: center;
 `;
 
-export const InfoText = styled.Text `
+export const InfoText = styled.Text`
   text-align: center;
   color: #fefefe;
   font-size: 13px;
 `;
 
-export const H1 = styled.Text `
+export const H1 = styled.Text`
   text-align: center;
   color: #fefefe;
   font-size: 20px;
