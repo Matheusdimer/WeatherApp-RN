@@ -49,7 +49,7 @@ export const MainWheather = styled.View`
 `;
 
 export const InfoCard = styled.View`
-  background-color: #87cdff;
+  background-color: rgba(255, 255, 255, 0.15);
   width: 150px;
   height: 60px;
   border-radius: 6px;

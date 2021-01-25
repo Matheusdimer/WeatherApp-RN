@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {
-  SafeAreaView,
   ScrollView,
   View,
   Text,
@@ -9,36 +8,29 @@ import {
   Dimensions,
 } from 'react-native';
 import {
-  Title,
-  Card,
-  Background,
-  Body,
   MainWheather,
-  CardText,
   InfoCard,
   InfoText,
   H1,
 } from './components/StyledComponents';
-import formatDescription from './util/formatDescription';
-import { Grafico } from "./components/grafico";
-import LinearGradient from "react-native-linear-gradient";
+import {Grafico} from './components/grafico';
+import LinearGradient from 'react-native-linear-gradient';
 
 const DEVICE_HEIGHT = Dimensions.get('screen').height;
 const WINDOW_HEIGHT = Dimensions.get('window').height;
-const STATUS_HEIGHT = StatusBar.currentHeight
-const NAVBAR_HEIGHT = DEVICE_HEIGHT - WINDOW_HEIGHT
+const STATUS_HEIGHT = StatusBar.currentHeight;
+const NAVBAR_HEIGHT = DEVICE_HEIGHT - WINDOW_HEIGHT;
 
-console.log(NAVBAR_HEIGHT)
+console.log(NAVBAR_HEIGHT);
 
-
-export default function Details({ route }) {
-  const { dados, day, detalhes, diaSem } = route.params;
+export default function Details({route}) {
+  const {dados, day, detalhes, diaSem} = route.params;
 
   let horaInicial = new Date(dados[0].dt * 1000);
   let divisaoDia = 24 - horaInicial.getHours();
   let previsao;
 
-  if (day == 0) {
+  if (day === 0) {
     previsao = dados.slice(0, divisaoDia);
   } else {
     previsao = dados.slice(divisaoDia, 24 + divisaoDia);
@@ -46,45 +38,51 @@ export default function Details({ route }) {
 
   let menorTemperatura = Math.round(previsao[0].temp);
 
-  const graficoHora = previsao.map(data => {
-    let hora = new Date(data.dt * 1000)
-    return hora.getHours()
-  })
+  const graficoHora = previsao.map((data) => {
+    let hora = new Date(data.dt * 1000);
+    return hora.getHours();
+  });
 
-  const graficoTemp = previsao.map(data => {
+  const graficoTemp = previsao.map((data) => {
     let temperatura = Math.round(data.temp);
-    if (temperatura < menorTemperatura)
-      menorTemperatura = temperatura
+    if (temperatura < menorTemperatura) {
+      menorTemperatura = temperatura;
+    }
     return temperatura;
-  })
+  });
 
-  const icones = previsao.map(data => {
-    return `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`
-  })
+  const icones = previsao.map((data) => {
+    return `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+  });
 
-  const chuva = previsao.map(data => {
-    return data.rain ? data.rain['1h'].toFixed(1) : false
-  })
+  const chuva = previsao.map((data) => {
+    return data.rain ? data.rain['1h'].toFixed(1) : false;
+  });
 
-  let nascer = new Date(detalhes.sunrise * 1000)
-  nascer = `${nascer.getHours()}:${nascer.getMinutes()}`
+  let nascer = new Date(detalhes.sunrise * 1000);
+  nascer = `${nascer.getHours()}:${nascer.getMinutes()}`;
 
-  let pordoSol = new Date(detalhes.sunset * 1000)
-  pordoSol = `${pordoSol.getHours()}:${pordoSol.getMinutes()}`
+  let pordoSol = new Date(detalhes.sunset * 1000);
+  pordoSol = `${pordoSol.getHours()}:${pordoSol.getMinutes()}`;
 
   return (
     <>
       <LinearGradient
-          style={{
-            position: 'absolute',
-            bottom: 0,
-            width: '100%',
-            height: '100%',
-          }}
-          colors={['#7dc8ff', '#5cbbff']}
-          pointerEvents={'none'}
-        />
-      <View style={{flex: 1, marginBottom: NAVBAR_HEIGHT, marginTop: STATUS_HEIGHT}}>
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          width: '100%',
+          height: '100%',
+        }}
+        colors={['#7dc8ff', '#0496c7']}
+        pointerEvents={'none'}
+      />
+      <View
+        style={{
+          flex: 1,
+          marginBottom: NAVBAR_HEIGHT,
+          marginTop: STATUS_HEIGHT,
+        }}>
         <MainWheather>
           <View width="20%">
             <Image
@@ -96,15 +94,21 @@ export default function Details({ route }) {
             />
           </View>
 
-          <Text style={{ fontSize: 16, color: '#FFF', width: "45%" }}>
+          <Text style={{fontSize: 16, color: '#FFF', width: '45%'}}>
             {diaSem + '\n' + detalhes.description}
           </Text>
-          <Text style={{ fontSize: 24, color: '#FFF' }}>
+          <Text style={{fontSize: 24, color: '#FFF'}}>
             {detalhes.max}ºC / {detalhes.min}ºC
           </Text>
         </MainWheather>
 
-        <View style={{ height: '40%', alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }}>
+        <View
+          style={{
+            height: '40%',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexDirection: 'row',
+          }}>
           <View>
             <InfoCard>
               <InfoText>Vento</InfoText>
@@ -135,8 +139,17 @@ export default function Details({ route }) {
           </View>
         </View>
 
-        <ScrollView horizontal={true} style={{margin: 0}} showsHorizontalScrollIndicator={false}>
-          <Grafico temp={graficoTemp} horas={graficoHora} icons={icones} chuva={chuva} yMin={menorTemperatura-10}/>
+        <ScrollView
+          horizontal={true}
+          style={{margin: 0}}
+          showsHorizontalScrollIndicator={false}>
+          <Grafico
+            temp={graficoTemp}
+            horas={graficoHora}
+            icons={icones}
+            chuva={chuva}
+            yMin={menorTemperatura - 10}
+          />
         </ScrollView>
       </View>
     </>

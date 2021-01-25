@@ -6,7 +6,7 @@ import {
   Easing,
 } from 'react-native';
 
-const background = '#5cbbff';
+const background = '#0496c7';
 const DEVICE_HEIGHT = Dimensions.get('screen').height;
 const WINDOW_HEIGHT = Dimensions.get('window').height;
 const STATUS_HEIGHT = StatusBar.currentHeight;
